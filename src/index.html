@@ -6,30 +6,19 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
     
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="public/style.css">
 
         <title>SourceOutlet.io - Count your source sth</title>
 
-        <script src="appModel.js" defer></script>
-        <script src="appView.js" defer></script>
-        <script src="appController.js" defer></script>
+        <script src="public/appModel.js" defer></script>
+        <script src="public/appView.js" defer></script>
+        <script src="public/appController.js" defer></script>
     </head>
     <body>
         <section class="section">
             <div class="container is-fluid">
-                <div class="columns is-mobile is-multiline">
-                    <div class="column is-full-mobile is-half-tablet is-one-third-widescreen is-one-quarter-fullhd">
-                        <div class="box">First column</div>
-                    </div>
-                    <div class="column is-full-mobile is-half-tablet is-one-third-widescreen is-one-quarter-fullhd">
-                        <div class="box">2 column</div>
-                    </div>
-                    <div class="column is-full-mobile is-half-tablet is-one-third-widescreen is-one-quarter-fullhd">
-                        <div class="box">3 column</div>
-                    </div>
-                    <div class="column is-full-mobile is-half-tablet is-one-third-widescreen is-one-quarter-fullhd">
-                        <div class="box">4 column</div>
-                    </div>
+                <div id="list" class="columns is-mobile is-multiline">
+                    <!--Gets filled in appView.js-->
                 </div>
             </div>
         </section>

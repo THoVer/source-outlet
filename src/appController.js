@@ -1,11 +1,13 @@
 function AppController(viewFn, modelFn) {
     var view = new AppView();
     var model = new AppModel();
+    
+    model.setDataLoadedCallback(view.renderList);
 
     this.init = function() {
         view.init();
         model.init();
-        console.log('loaded');
+        console.log("refered from", document.referrer);
     }
 }
 
