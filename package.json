@@ -1,0 +1,17 @@
+{
+  "name": "source-outlet",
+  "version": "1.0.0",
+  "engines": {
+    "node": "8.12.0"
+  },
+  "description": "Count number of visitors from different social sites",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "THoVer",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}

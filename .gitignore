@@ -1,0 +1,6 @@
+# Do not include any real environment configurations
+config.development.js
+config.staging.js
+config.production.js
+
+node_modules
