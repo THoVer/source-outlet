@@ -1,7 +1,10 @@
+html {
+    height: 100%;
+}
+
 body {
     background-color: #F4EFF0;
-    width: 100vw;
-    height: 100vh;
+    height: 100%;
     line-height: 3em;
     margin: 0;
 }
@@ -12,12 +15,50 @@ body {
     border: 1px solid red;
 }
 
-.website-name {
+.website-rank {
+    font-size: 1.5rem;
+    font-weight: 300;
+    opacity: 0.9;
+}
+
+.website-rank.first {
+    color: gold;
+    font-size: 1.9rem;
     font-weight: 500;
 }
 
-img.website-icon {
+.website-rank.second {
+    color: silver;
+    font-size: 1.7rem;
+    font-weight: 500;
+}
+
+.website-rank.third {
+    font-weight: 400;
+}
+
+.website-icon {
     height: 76px;
     object-fit: cover;
     max-width: 60%;
+}
+
+.website-name {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.website-count {
+    font-size: 1.4rem;
+    opacity: 0.8;
+}
+
+img.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.text-center {
+    text-align: center;
 }
