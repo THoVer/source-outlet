@@ -48,11 +48,18 @@ httpServer.listen(config.app.port, config.app.ip, function() {
 function getSource(req) {
     let referer;
     
-    // First check referer
+    // First check if referer header is set
     if (req.headers.referer) {
         referer = req.headers.referer;
     }
-    if (req.url) {
+    // If it isn't parse url, and hope to get ?ref= or ?utm_source
+    else if (req.url) {
+        let ruleset = {
+            'producthunt': 'www.producthunt.com',
+            'hackernews': 'www.hackernews.com',
+            'reddit': 'www.reddit.com',
+            'indiehackers': 'www.indiehackers.com'
+        }
         referer = req.url;
     }
 
@@ -91,25 +98,36 @@ function loadData() {
         name: 'Reddit',
         count: 4560,
         color: '#5f99cf',
-        url: ''
+        textcolor: '#ffffff',
+        url: 'www.reddit.com'
     }, {
         icon: '',
         name: 'ProductHunt',
         count: 500,
         color: '#00b27f',
-        url: ''
+        textcolor: '#ffffff',
+        url: 'www.producthunt.com'
     }, {
         icon: '',
         name: 'HackerNews',
         count: 2000,
         color: '#ff4000',
-        url: ''
+        textcolor: '#ffffff',
+        url: 'www.hackernews.com'
     }, {
-        icon: '',
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg',
         name: 'Facebook',
         count: 64,
         color: '#3b5998',
-        url: ''
+        textcolor: '#ffffff',
+        url: 'www.facebook.com'
+    }, {
+        icon: '',
+        name: 'IndieHackers',
+        count: 89,
+        color: '#1f364d',
+        textcolor: '#ffffff',
+        url: 'www.indiehackers.com'
     }]
 
     return data;

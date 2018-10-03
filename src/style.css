@@ -11,3 +11,7 @@ body {
     height: 100%;
     border: 1px solid red;
 }
+
+.website-name {
+    font-weight: 500;
+}

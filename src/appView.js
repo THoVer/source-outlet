@@ -25,9 +25,14 @@ function AppView() {
         listItem.classList.add('column', 'is-full-mobile', 'is-half-tablet', 'is-one-third-widescreen', 'is-one-quarter-fullhd');
 
         var box = document.createElement('div');
-        box.classList.add('box');
+        box.classList.add('box', 'website-name');
         box.textContent = itemData.name;
         box.style.backgroundColor = itemData.color;
+        box.style.color = itemData.textcolor;
+
+        var icon = document.createElement('img');
+        icon.src = itemData.icon;
+        box.appendChild(icon);
         
         listItem.appendChild(box);
         return listItem;
