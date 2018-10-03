@@ -96,26 +96,30 @@ function AppView() {
         var box = document.createElement('div');
         box.classList.add('box');
         box.style.backgroundColor = itemData.color;
+        
+        var link = document.createElement('a');
+        link.href = itemData.url;
+        box.appendChild(link);
         {
             var position = websitePositionElement(itemData);
-            box.appendChild(position);
+            link.appendChild(position);
 
             var icon = document.createElement('img');
             icon.classList.add('website-icon', 'center');
             icon.src = itemData.icon;
-            box.appendChild(icon);
+            link.appendChild(icon);
             
             var name = document.createElement('div');
             name.classList.add('website-name', 'text-center');
             name.textContent = itemData.name;
             name.style.color = itemData.textcolor;
-            box.appendChild(name);
+            link.appendChild(name);
 
             var count = document.createElement('div');
             count.classList.add('website-count', 'text-center');
             count.textContent = itemData.count;
             count.style.color = itemData.textcolor;
-            box.appendChild(count);
+            link.appendChild(count);
         }
         listItem.appendChild(box);
 

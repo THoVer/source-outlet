@@ -99,14 +99,14 @@ function loadData() {
         count: 4560,
         color: '#5f99cf',
         textcolor: '#ffffff',
-        url: 'www.reddit.com'
+        url: 'https://www.reddit.com'
     }, {
         icon: 'http://www.cycletab.rocks/img/productHunt.png',
         name: 'ProductHunt',
         count: 500,
         color: '#da552f',
         textcolor: '#ffffff',
-        url: 'www.producthunt.com'
+        url: 'https://www.producthunt.com'
     }, {
         icon: 'https://news.ycombinator.com/favicon.ico',
         name: 'HackerNews',
@@ -120,14 +120,14 @@ function loadData() {
         count: 64,
         color: '#3b5998',
         textcolor: '#ffffff',
-        url: 'www.facebook.com'
+        url: 'https://www.facebook.com'
     }, {
         icon: 'https://www.indiehackers.com/images/logos/indie-hackers-logo__glyph--light.svg',
         name: 'IndieHackers',
         count: 89,
         color: '#1f364d',
         textcolor: '#ffffff',
-        url: 'www.indiehackers.com'
+        url: 'https://www.indiehackers.com'
     }]
 
     return data;
