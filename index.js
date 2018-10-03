@@ -94,26 +94,26 @@ async function createReferer(referer) {
 
 function loadData() {
     let data = [{
-        icon: '',
+        icon: 'https://cdn.worldvectorlogo.com/logos/reddit-2.svg',
         name: 'Reddit',
         count: 4560,
         color: '#5f99cf',
         textcolor: '#ffffff',
         url: 'www.reddit.com'
     }, {
-        icon: '',
+        icon: 'http://www.cycletab.rocks/img/productHunt.png',
         name: 'ProductHunt',
         count: 500,
-        color: '#00b27f',
+        color: '#da552f',
         textcolor: '#ffffff',
         url: 'www.producthunt.com'
     }, {
-        icon: '',
+        icon: 'https://news.ycombinator.com/favicon.ico',
         name: 'HackerNews',
         count: 2000,
-        color: '#ff4000',
+        color: '#ff6600',
         textcolor: '#ffffff',
-        url: 'www.hackernews.com'
+        url: 'https://news.ycombinator.com'
     }, {
         icon: 'https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg',
         name: 'Facebook',
@@ -122,7 +122,7 @@ function loadData() {
         textcolor: '#ffffff',
         url: 'www.facebook.com'
     }, {
-        icon: '',
+        icon: 'https://www.indiehackers.com/images/logos/indie-hackers-logo__glyph--light.svg',
         name: 'IndieHackers',
         count: 89,
         color: '#1f364d',
