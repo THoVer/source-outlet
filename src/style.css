@@ -15,3 +15,7 @@ body {
 .website-name {
     font-weight: 500;
 }
+
+img.website-icon {
+    width: 76px;
+}

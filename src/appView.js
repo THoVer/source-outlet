@@ -31,6 +31,7 @@ function AppView() {
         box.style.color = itemData.textcolor;
 
         var icon = document.createElement('img');
+        icon.classList.add('website-icon');
         icon.src = itemData.icon;
         box.appendChild(icon);
         
