@@ -19,6 +19,7 @@ body {
     font-size: 1.5rem;
     font-weight: 300;
     opacity: 0.9;
+    margin-bottom: 0.2rem;
 }
 
 .website-rank.first {
@@ -41,19 +42,23 @@ body {
     height: 76px;
     object-fit: cover;
     max-width: 60%;
+    margin-bottom: 0.2rem;
 }
 
 .website-name {
     font-size: 2rem;
     font-weight: 500;
+    margin-bottom: 0.2rem;
 }
 
 .website-count {
     font-size: 1.4rem;
     opacity: 0.8;
+    margin-bottom: 0.2rem;
+    line-height: 1.8rem;
 }
 
-img.center {
+.center {
     display: block;
     margin-left: auto;
     margin-right: auto;
