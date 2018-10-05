@@ -5,9 +5,12 @@ var https = require('https');
 var path = require('path');
 var fs = require('fs');
 var bodyParser = require('body-parser');
+var mysql = require('mysql');
 var getFavicons = require('get-website-favicon')
+var URL = require('url');
 
 var config = require('./config.'+process.env.NODE_ENV+'.js');
+var connection;
 
 /*var privateKey = fs.readFileSync(path.join(config.app.certPath, '/privkey.pem'), 'utf8');
 var certificate = fs.readFileSync(path.join(config.app.certPath, '/fullchain.pem'), 'utf8');
@@ -25,16 +28,19 @@ app.get('/somethingdifferent', function (req, res) {
     res.send('ok')
 })
 
-app.get('/stats', (req, res) => {
-    data = loadData();
+app.get('/stats', async (req, res) => {
+    connection = mysql.createConnection(config.db);
+    data = await loadData();
+    connection.end();
     res.send(data);
 })
 
 /* final catch-all route to index.html defined last */
-app.get('/', (req, res) => {
-    referer = getSource(req);
-    createOrIncrementSource(referer);
-    // save referer in database (?)
+app.get('/', async (req, res) => {
+    connection = mysql.createConnection(config.db);
+    referrer = await getSource(req);
+    await createOrIncrementSource(referrer);
+    connection.end();
     res.sendFile(__dirname + '/src/index.html');
 })
 
@@ -45,90 +51,120 @@ httpServer.listen(config.app.port, config.app.ip, function() {
     onsole.log('listening on ' + config.app.ip + ':' + config.app.securePort);
 });*/
 
-function getSource(req) {
-    let referer;
+async function getSource(req) {
+    // Has to return url of website
+    let referrer;
     
-    // First check if referer header is set
-    if (req.headers.referer) {
-        referer = req.headers.referer;
+    // First check if referrer header is set
+    // If it is, then referrer is url
+    if (req.headers.referrer) {
+        referrer = req.headers.referrer;
     }
     // If it isn't parse url, and hope to get ?ref= or ?utm_source
     else if (req.url) {
-        let ruleset = {
-            'producthunt': 'www.producthunt.com',
-            'hackernews': 'www.hackernews.com',
-            'reddit': 'www.reddit.com',
-            'indiehackers': 'www.indiehackers.com'
+        if (req.query.ref) {
+            ref = await loadReferrer(req.query.ref);
+            if (ref) {
+                referrer = ref.url;
+            } else if (req.query.ref.includes('www.')) {
+                referrer = req.query.ref;
+            }
         }
-        referer = req.url;
+        if (!referrer && req.query.utm_source) {
+            referrer = req.query.utm_source;
+        }
     }
-
-    return referer;
+    if (!referrer) {
+        referrer = 'unknown';
+    }
+    if (referrer.startsWith('www')) {
+        referrer = 'https://' + referrer;
+    }
+    return referrer;
 }
 
-async function createOrIncrementSource(referer) {
-    // Increment count of visits from this particular referer
-    let updated = await incrementReferer(referer);
+async function loadReferrer(referrer) {
+    let promise = new Promise((resolve, reject) => {
+        let sql = "SELECT * FROM sources where url ="+mysql.escape(referrer);
+        connection.query(sql, (err, res, fields) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(res[0]);
+            }
+        });
+    });
+
+    return promise;
+}
+
+async function createOrIncrementSource(referrer) {
+    // Increment count of visits from this particular referrer
+    let updated = await incrementReferrer(referrer);
     if (!updated)
-        await createReferer(referer);
+        await createReferrer(referrer);
     
 }
 
-async function incrementReferer(referer) {
-    // TODO: Implement with database
-    return false;
+async function incrementReferrer(referrer) {
+    let promise = new Promise((resolve, reject) => {
+        let sql = "UPDATE sources SET count = count + 1 WHERE url="+mysql.escape(referrer);
+        connection.query(sql, (err, res, fields) => {
+            if (err) {
+                console.log(err);
+                reject(err);
+            } else {
+                resolve(res.affectedRows);
+            }
+        });
+    });
+
+    return promise;
 }
 
-async function createReferer(referer) {
-    return;
-    // TODO: Implement with database
-    var icon;
-    var color;
-    getFavicons('github.com').then(data => {
-        for (let i = 0; i < data.length; i++) {
-            if (data[i].sizes == '76x76')
-                icon = data[i].src;
-        }
-    })
+async function createReferrer(referrer) {
+    let promise = new Promise((resolve, reject) => {
+        let stmt = 'INSERT INTO sources (name, count, color, textcolor, url, icon) ' +
+            'VALUES (?, ?, ?, ?, ?, ?)';
+        let url = URL.parse(referrer, true);
+        let name = url.hostname || 'Unknown';
+        let count = 1;
+        let color = '#afafaf';
+        let textcolor = '#ffffff';
+        let icon = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Icon-round-Question_mark.svg/240px-Icon-round-Question_mark.svg.png';
+        let values = [name, count, color, textcolor, referrer, icon];
+        connection.query(stmt, values, (err, res, fields) => {
+            if (err) {
+                console.log(err);
+                reject(err);
+            } else {
+                resolve(res);
+            }
+        });
+    });
+
+    return promise;
+    // var icon;
+    // var color;
+    // getFavicons('github.com').then(data => {
+    //     for (let i = 0; i < data.length; i++) {
+    //         if (data[i].sizes == '76x76')
+    //             icon = data[i].src;
+    //     }
+    // })
 }
 
-function loadData() {
-    let data = [{
-        icon: 'https://cdn.worldvectorlogo.com/logos/reddit-2.svg',
-        name: 'Reddit',
-        count: 4560,
-        color: '#5f99cf',
-        textcolor: '#ffffff',
-        url: 'https://www.reddit.com'
-    }, {
-        icon: 'http://www.cycletab.rocks/img/productHunt.png',
-        name: 'ProductHunt',
-        count: 500,
-        color: '#da552f',
-        textcolor: '#ffffff',
-        url: 'https://www.producthunt.com'
-    }, {
-        icon: 'https://news.ycombinator.com/favicon.ico',
-        name: 'HackerNews',
-        count: 2000,
-        color: '#ff6600',
-        textcolor: '#ffffff',
-        url: 'https://news.ycombinator.com'
-    }, {
-        icon: 'https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg',
-        name: 'Facebook',
-        count: 64,
-        color: '#3b5998',
-        textcolor: '#ffffff',
-        url: 'https://www.facebook.com'
-    }, {
-        icon: 'https://www.indiehackers.com/images/logos/indie-hackers-logo__glyph--light.svg',
-        name: 'IndieHackers',
-        count: 89,
-        color: '#1f364d',
-        textcolor: '#ffffff',
-        url: 'https://www.indiehackers.com'
-    }]
+async function loadData() {
+    let promise = new Promise((resolve, reject) => {
+        let sql = 'SELECT * FROM sources ORDER BY count DESC';
+        connection.query(sql, (err, res, fields) => {
+            if (err) {
+                console.log(err);
+                reject(err);
+            }
+            resolve(res);
+        });
+    });
 
-    return data;
+    return promise;
 }
