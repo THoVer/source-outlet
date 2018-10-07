@@ -33,4 +33,11 @@ INSERT INTO sources (icon, name, color, textcolor, url) VALUES
     '#1f364d',
     '#ffffff',
     'https://www.indiehackers.com'
+),
+(
+    'https://lucasgruwez.github.io/waffle-grid/img/github-logo.svg',
+    'GitHub',
+    '#333',
+    '#ffffff',
+    'https://github.com/THoVer/source-outlet'
 )
