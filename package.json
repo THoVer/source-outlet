@@ -15,5 +15,8 @@
     "express": "^4.16.3",
     "get-website-favicon": "0.0.7",
     "mysql": "^2.16.0"
+  },
+  "devDependencies": {
+    "ip-to-int": "^0.3.1"
   }
 }

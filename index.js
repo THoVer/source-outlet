@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var mysql = require('mysql');
 var getFavicons = require('get-website-favicon')
 var URL = require('url');
+var ipToInt = require('ip-to-int');
 
 var config = require('./config.'+process.env.NODE_ENV+'.js');
 var connection;
@@ -40,6 +41,7 @@ app.get('/', async (req, res) => {
     connection = mysql.createConnection(config.db);
     referrer = await getSource(req);
     await createOrIncrementSource(referrer);
+    await registerVisitor(req.ip, referrer);
     connection.end();
     res.sendFile(__dirname + '/src/index.html');
 })
@@ -152,6 +154,23 @@ async function createReferrer(referrer) {
     //             icon = data[i].src;
     //     }
     // })
+}
+
+async function registerVisitor(ip, referrer) {
+    let promise = new Promise((resolve, reject) => {
+        let stmt = 'INSERT INTO visit (ip, referrer) VALUES (?, ?)';
+        let ipInt = ipToInt(ip).toInt();
+        let values = [ipInt, referrer];
+        connection.query(stmt, values, (err, res, fields) => {
+            if (err) {
+                console.log(err);
+                reject(err);
+            }
+            resolve(res);
+        });
+    });
+
+    return promise;
 }
 
 async function loadData() {
