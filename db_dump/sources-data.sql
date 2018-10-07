@@ -1,0 +1,36 @@
+INSERT INTO sources (icon, name, color, textcolor, url) VALUES
+(
+    'https://cdn.worldvectorlogo.com/logos/reddit-2.svg',
+    'Reddit',
+    '#5f99cf',
+    '#ffffff',
+    'https://www.reddit.com'
+),
+(
+    'http://www.cycletab.rocks/img/productHunt.png',
+    'ProductHunt',
+    '#da552f',
+    '#ffffff',
+    'https://www.producthunt.com'
+),
+(
+    'https://news.ycombinator.com/favicon.ico',
+    'HackerNews',
+    '#ff6600',
+    '#ffffff',
+    'https://news.ycombinator.com'
+),
+(
+    'https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg',
+   'Facebook',
+    '#3b5998',
+    '#ffffff',
+    'https://www.facebook.com'
+),
+(
+    'https://www.indiehackers.com/images/logos/indie-hackers-logo__glyph--light.svg',
+    'IndieHackers',
+    '#1f364d',
+    '#ffffff',
+    'https://www.indiehackers.com'
+)

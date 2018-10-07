@@ -1,6 +1,6 @@
 # SourceOutlet
 
-Web app which counts how many users came into website from various sources
+[Web app](http://142.93.241.187?ref=github) which counts how many users came into website from various sources
 
 ## Getting started
 
@@ -12,7 +12,7 @@ Create _config.NODE_ENV.js_ based on [config.js](/config.js)
 
 Set NODE_ENV environment variable
 
-MySql database is used to store data. Set-up one and use [sql script](/db_dump/source-outlet.sql) to to migrate database
+MySql database is used to store data. Set-up one and use [sql script](/db_dump/source-outlet.sql) to migrate database and [sources-data.sql](/db_dump/sources-data.sql) to load initial data
 
 ## Hosting with `systemctl`
 
