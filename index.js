@@ -87,8 +87,8 @@ async function getSource(req) {
 
 async function loadReferrer(referrer) {
     let promise = new Promise((resolve, reject) => {
-        let sql = "SELECT * FROM sources where url ="+mysql.escape(referrer);
-        connection.query(sql, (err, res, fields) => {
+        let stmt = "SELECT * FROM sources where url = ? OR name = ?";
+        connection.query(stmt, [referrer, referrer], (err, res, fields) => {
             if (err) {
                 reject(err);
             } else {
